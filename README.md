@@ -1,4 +1,24 @@
-Ссылка на модель. https://drive.google.com/drive/folders/1UPHDlMBywoJricfVFC8WQ8yPRjCgtYut?usp=sharing Папку 'MTP7' нужно поместить в папку 'model' 
+Установка Требования Python 3.9 или выше Установленные зависимости в requirements.txt
+
+https://github.com/Dezmoond/MTP.git
+
+cd MTP
+
+python -m venv venv
+
+venv\Scripts\activate
+
+pip install -r requirements.txt
+
+FA-LLAMA.py для обучения
+MTPotvetmetric.py для инференса
+
+ссылка на модель которую нужно добавить в корневую папку:
+
+Ссылка на модель. https://drive.google.com/drive/folders/1UPHDlMBywoJricfVFC8WQ8yPRjCgtYut?usp=sharing 
+
+Папку 'MTP7' нужно поместить в папку 'model'
+Результативность модели на тестовом датасете 89,56%
 
 
 форма ответа модели:
