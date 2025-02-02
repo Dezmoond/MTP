@@ -1,6 +1,7 @@
 import torch
 import json
 import re
+import pandas as pd
 from collections import defaultdict
 from transformers import PreTrainedTokenizerFast, AutoModelForCausalLM
 
@@ -8,7 +9,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device:', device)
 
 # Путь к модели
-model_path = "E:/KPI/MTP7"
+model_path = "model/MTP7"
 
 # Загрузка токенизатора и модели
 tokenizer = PreTrainedTokenizerFast.from_pretrained(model_path)
@@ -47,6 +48,10 @@ def extract_last_number(text):
     matches = re.findall(r'\d+', text)  # Находим все числа в тексте
     return matches[-1] if matches else None  # Берём последнее найденное число
 
+# Загрузка категорий из CSV файла
+category_df = pd.read_csv('mtp/category.csv', delimiter=';', encoding='utf-8')
+category_dict = dict(zip(category_df['number_category'], category_df['name_category']))
+
 # Чтение данных
 with open('mtp/llamatest6.txt', 'r', encoding='utf-8') as file:
     data = json.load(file)
@@ -68,6 +73,9 @@ for entry in data:
     # Извлекаем число
     generated_number = extract_last_number(generated_response)
 
+    # Получаем название категории
+    category_name = category_dict.get(int(generated_number), "Неизвестная категория")
+
     # Обновляем статистику по категории
     category_errors[expected_response]["total"] += 1
     if generated_number != expected_response:
@@ -82,6 +90,7 @@ for entry in data:
     print(f"Ответ модели: {generated_response}")
     print(f"Выделенный ответ: {generated_number}")
     print(f"Правильный ответ: {expected_response}")
+    print(f"Определенная категория: {category_name}")
     print("-" * 50)
 
 # Статистика
