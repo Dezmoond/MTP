@@ -1,4 +1,5 @@
 Установка Требования Python 3.9 или выше Установленные зависимости в requirements.txt
+установите драйвер cuda 12.1 и cudnn 12.x
 
 https://github.com/Dezmoond/MTP.git
 
